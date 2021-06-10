@@ -1,6 +1,6 @@
 # Torneio de Vaufreixo
  
-1 Especificação do Problema
+## 1 Especificação do Problema
 
 Um torneio é uma competição popular nos Sete Reinos de Westeros. Torneios em Westeros variam de acordo
 com a região em que o torneio é realizado, os desejos do senhor do castelo ou região, e as regras elaboradas
@@ -9,7 +9,7 @@ blindados devem tentar derrubar uns aos outros de suas montarias com uma lança,
 uma variedade de armas embotadas.
 
 Sor Ducan, o Alto, é um escudeiro que acabou de virar cavaleiro e está ansioso para ter suas vitorias em
-torneios. Ele decidiu começar no torneio de Vaufreixo, mas ao chegar lá o torneio já havia começado. Antes
+torneios. Ele decidiu começar no [Torneio de Vaufreixo](https://gameofthrones.fandom.com/pt-br/wiki/Torneio_de_Vaufreixo), mas ao chegar lá o torneio já havia começado. Antes
 de Sor Ducan chegar havia N cavaleiros na competição, numerados de 1 a N. Cada um deles já havia obtido
 uma certa quantidade de pontos no torneio, ou seja, o i-ésimo cavaleiro obteve pi pontos.
 
@@ -28,12 +28,12 @@ O objetivo de Sor Ducan é ficar entre os K melhores cavaleiros do torneio, para
 como um bom cavaleiro e ter um bom prêmio. Determine o esforço mínimo necessário que ele precisa investir
 para alcançar seu objetivo, se for possível.
 
-2 Entrada
+## 2 Entrada
 
 A primeira linha contém um par de números inteiros N e K (1 ≤ K ≤ N + 1). As i-ésimas linhas seguintes
 contém N linhas com dois números inteiros, separados por um único espaço - pi e ei (0 ≤ pi, ei ≤ 100000).
 
-3 Saída
+## 3 Saída
 
 Imprimir um único número em uma única linha - a quantidade mínima de esforço que Sor Ducan precisa para
 se classificar entre os K melhores do torneio. Se nenhuma quantidade de esforço fará com que Sor Ducan
@@ -41,29 +41,39 @@ tenha a classificação desejada o número de saída deve ser -1.
 
 A saída não deve ser escrita em nenhum arquivo. Ela deve ser escrita na saída padrão.
 
-4 Exemplo
+## 4 Exemplo
 
-Entrada:
+### Entrada:
 3 2
+
 1 1
+
 1 4
+
 2 2
-Saída:
+### Saída:
 3
 
-Entrada:
+### Entrada:
 2 1
+
 3 2
+
 4 0
-Saída:
+### Saída:
 -1
 
-Entrada:
+### Entrada:
 5 2
+
 2 10
+
 2 10
+
 1 1
+
 3 1
+
 3 1
-Saída:
+### Saída:
 12
