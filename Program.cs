@@ -9,22 +9,63 @@ namespace Torneio_de_Vaufreixo
     {
         static void Main(string[] args)
         {
-            List<Cavalheiro> cavalheiro = new List<Cavalheiro>();
-            int quantClassificados = 0;
+            List<Cavalheiro> cavalheiro;
+            int quantClassificados;
+            string op;
 
-            LerArquivo(ref quantClassificados, cavalheiro);
+            while (true)
+            {
+                cavalheiro = new List<Cavalheiro>();
+                quantClassificados = 0;
 
-            ForcaBruta(cavalheiro, quantClassificados - 1);
+                Console.ResetColor();
+                Console.Write("\n1 - Gerar Torneio \n2 - Ler Arquivo \n\nAguardando opção: ");
+                op = Console.ReadLine();
+
+                if (op != "1" && op != "2")
+                    MensagemErro("\nOpção inválida.");
+                else
+                {
+                    if (op == "1")
+                    {
+                        GeradorTorneio();
+                        LerArquivo(ref quantClassificados, cavalheiro, "torneioRandom.txt");
+                    }
+                    else
+                        LerArquivo(ref quantClassificados, cavalheiro);
+
+                    ForcaBruta(cavalheiro, quantClassificados - 1);
+                    Console.WriteLine("\nPressione -Enter- para continuar");
+                    Console.ReadKey();
+                    Console.Clear();
+                }
+            }
         }
+        static void GeradorTorneio()
+        {
+            StreamWriter arquivo = new StreamWriter("torneioRandom.txt");
+            Random rnd = new Random();
 
+            int numCav, numClas;
+
+            Console.Write("\nInforme o número de cavalheiros: ");
+            numCav = int.Parse(Console.ReadLine());
+            Console.Write("\nInforme o número de classificados: ");
+            numClas = int.Parse(Console.ReadLine());
+
+            arquivo.WriteLine(numCav + " " + numClas);
+
+            for (int i = 0; i < numCav; i++)
+                arquivo.WriteLine((rnd.Next(numCav) + (rnd.Next(numCav) % 3 == 0 ? numCav : 0)) + " " + rnd.Next(numCav));
+
+            arquivo.Close();
+        }
         static void LerArquivo(ref int quantClassificados, List<Cavalheiro> cavalheiro, string nomeArq = "")
         {
             StreamReader arquivo;
             string linha;
-            string[] split;
             int cont = 1;
 
-            // solicita o nome do arquivo até que o nome seja válido
             while (!File.Exists(nomeArq))
             {
                 Console.Write("\nInforme o nome do arquivo: ");
@@ -37,24 +78,22 @@ namespace Torneio_de_Vaufreixo
                     Console.ReadKey();
                 }
             }
-            arquivo = new StreamReader(nomeArq); // abre arquivo para leitura
-            linha = arquivo.ReadLine(); // lê a primeira linha (informações do torneio)
+            arquivo = new StreamReader(nomeArq);
+            linha = arquivo.ReadLine();
 
             try
             {
-                // armazena o número de classificados no torneio
                 quantClassificados = int.Parse(linha.Split(' ')[1]);
-                linha = arquivo.ReadLine(); // lê a próxima linha (dados dos cavaleiros)
+                linha = arquivo.ReadLine();
 
                 while (linha != null)
                 {
-                    // cria novo cavalheiro e adiciona na lista
                     cavalheiro.Add(new Cavalheiro(int.Parse(linha.Split(' ')[0]), int.Parse(linha.Split(' ')[1]), "Cav. " + cont.ToString()));
 
                     cont++;
-                    linha = arquivo.ReadLine(); // lê próxima linha (dados dos cavaleiros)
+                    linha = arquivo.ReadLine();
                 }
-                arquivo.Close(); // fecha arquivo
+                arquivo.Close();
             }
             catch (Exception ex)
             {
@@ -99,20 +138,20 @@ namespace Torneio_de_Vaufreixo
             string binario;
             int combinacoes, melhorSimulacao = 0;
 
-            Ducan = new Cavalheiro(0, 0, "Ducan", ""); // cria cavalheiro Sr. Ducan
+            Ducan = new Cavalheiro(0, 0, "Ducan", "");
 
             // objeto para armazenar o caso mais favorável para o Sr. Ducan
             melhorResultado = new Cavalheiro(int.MaxValue, int.MaxValue, "Ducan", "");
 
             combinacoes = (int)Math.Pow(2, cavalheiro.Count); // identifica o número de combinações possíveis
 
-            for (int i = 0; i < combinacoes; i++) // executa todas as combinações
+            for (int i = 0; i < combinacoes; i++)
             {
                 Console.WriteLine($"\n\n\nSIMULAÇÃO: {i + 1}");
 
                 simulacao = new List<Cavalheiro>(); // zera os resultados da simulação anterior
 
-                // cria cópia da lista de cavalheiros para simular os campeonatos
+                // cria cópia da lista de cavalheiros para simular os torneios
                 CopiaLista(cavalheiro, simulacao);
 
                 // zera os valores do Ducan indicando a sua chegada no torneio
